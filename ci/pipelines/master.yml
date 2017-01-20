@@ -1,0 +1,24 @@
+resources:
+  - name: docker-chefdk
+    type: git
+    source:
+      uri: https://github.com/brandocorp/docker-chefdk.git
+      branch: master
+
+jobs:
+  - name: fetch
+    plan:
+      - get: docker-chefdk
+        trigger: true
+      - task: run
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: busybox
+              tag: latest
+          run:
+            path: echo
+            args:
+              - "You did it"
